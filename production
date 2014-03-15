@@ -1,0 +1,7 @@
+#[webservers]
+#[dbservers]
+#[lbservers]
+#[cacheservers]
+#[monitorin]
+#[logs]
+#[searchservers]

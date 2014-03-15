@@ -83,7 +83,7 @@ ansible-playbook ./provision.yml  -i 'localhost,'  --connection=local  --tags="s
 toc reate the instances first we have to configure how many instances and which
 are theyr settings. to do this edit `roles/provision/vars/instances.yml`. You
 only have 2 settings requirements per instance: `name` and `ssh_keys`, the other
-ones have defaults in `roles/provision/defaults/instances.yml` check them.
+ones have defaults in `roles/provision/defaults/main.yml` check them.
 
 As example this would be a instance creation setup:
 

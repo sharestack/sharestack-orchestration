@@ -1,11 +1,35 @@
 ---
 
-- name: Store ssh keys in Digital ocean
+- name: Store ssh keys at Digital Ocean
   digital_ocean_sshkey: >
     state=present
     name={{ item.name }}
     ssh_pub_key="{{ lookup('file', item.file) }}"
   with_items: ssh_keys
+  register: ssh_keys_response
   tags:
     - ssh
     - keys
+
+# uncomment if you want your ssh ids
+#- debug: msg="SSH key {{item.ssh_key.name}} with id {{item.ssh_key.id}} available"
+#  with_items: ssh_keys_response.results
+#  tags:
+#    - ssh
+#    - keys
+
+- name: create instances at Digital Ocean
+  digital_ocean: >
+    state=present
+    name={{ item.name }}
+    size_id={{ item.size | default(default_instance_size) }}
+    region_id={{ item.region | default(default_instance_region) }}
+    image_id={{ item.image | default(default_instance_image)}}
+    wait={{ item.wait | default(default_instance_wait) }}
+    ssh_key_ids={{ item.ssh_keys }}
+
+  with_items: instances
+  tags:
+    - instances
+    - create
+    - digital ocean

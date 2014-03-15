@@ -60,14 +60,20 @@
 # 64GB (id: 69)
 
 
+# For now only allow this settings:
+# - name: the name of the instance
+# - Image: The image to load in the new instance
+# - size: the type of instance (ram, cpu, disk...)
+# - region: where to create the instance
+# - wait: wait until is up (usefull if you are doing any work on these machines afterwards)
+# - ssh_key_id: the ssh key id (previously stored in DO) 
+
 # describe the instances to create:
 
-droplets:
+instances:
   - name: development.test.1
     image: 1505447
     size: 66
     region: 5
-  - name: development.test.2
-    image: 350424
-    size: 66
-    region: 3
+    # Be aware of no space between them
+    ssh_keys: "95309,95312"

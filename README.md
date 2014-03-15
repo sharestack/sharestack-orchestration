@@ -80,6 +80,59 @@ ansible-playbook ./provision.yml  -i 'localhost,'  --connection=local  --tags="s
 
 ###Create the instances
 
+toc reate the instances first we have to configure how many instances and which
+are theyr settings. to do this edit `roles/provision/vars/instances.yml`. You
+only have 2 settings requirements per instance: `name` and `ssh_keys`, the other
+ones have defaults in `roles/provision/defaults/instances.yml` check them.
+
+As example this would be a instance creation setup:
+
+```yaml
+instances:
+  - name: development.test.1
+    image: 1505447
+    size: 66
+    region: 5
+    wait: false
+    ssh_keys:
+      - sharestack
+  - name: development.test.2
+    image: 361740
+    wait: false
+    ssh_keys:
+      - sharestack
+```
+
+To execute, the same rules as the previous block are applied (local connection,
+virtualenv use caution...).
+
+To execute only this block we would use:
+
+```
+ansible-playbook ./provision.yml  -i 'localhost,'  --connection=local  --tags="instances,create"
+```
+
+Or with virtualenv:
+
+```
+ansible-playbook ./provision.yml  -i 'localhost,'  --connection=local  --tags="instances,create" --extra-vars "ansible_python_interpreter=~/.virtualenvs/ansible/bin/python"
+```
+
+###Wrapping up
+
+If you want to execute both of them you can use
+
+```
+ansible-playbook ./provision.yml  -i 'localhost,'  --connection=local
+```
+
+or with virtualenv:
+
+```
+ansible-playbook ./provision.yml  -i 'localhost,'  --connection=local --extra-vars "ansible_python_interpreter=~/.virtualenvs/ansible/bin/python"
+```
+
+
 ---
 
 Automation

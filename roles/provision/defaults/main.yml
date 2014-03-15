@@ -1,0 +1,6 @@
+# Default instances settings
+
+default_instance_image: 1505447
+default_instance_size: 66
+default_instance_region: 5
+default_instance_wait: true

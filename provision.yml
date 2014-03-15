@@ -1,0 +1,14 @@
+---
+
+- hosts: 127.0.0.1 # this hasn't got a target host
+  connection: local
+
+  vars_files:
+    - roles/provision/vars/sshkeys.yml
+    - roles/provision/vars/instances.yml
+
+  roles:
+    - provision
+  tags:
+    - provision
+    - setup

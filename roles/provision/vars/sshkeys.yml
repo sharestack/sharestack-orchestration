@@ -1,0 +1,5 @@
+# describe the ssh keys
+
+ssh_keys:
+  - name: sharestack
+    file: ~/.ssh/id_rsa_sharestack.pub

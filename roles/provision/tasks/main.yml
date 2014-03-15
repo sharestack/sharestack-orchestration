@@ -1,0 +1,11 @@
+---
+
+- name: Store ssh keys in Digital ocean
+  digital_ocean_sshkey: >
+    state=present
+    name={{ item.name }}
+    ssh_pub_key="{{ lookup('file', item.file) }}"
+  with_items: ssh_keys
+  tags:
+    - ssh
+    - keys

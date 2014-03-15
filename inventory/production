@@ -1,7 +1,19 @@
-#[webservers]
-#[dbservers]
-#[lbservers]
-#[cacheservers]
-#[monitorin]
-#[logs]
-#[searchservers]
+
+# The groups will be single, will work like an alias for referencing the right address
+[1.web.production.sharestack]
+[1.db.production.sharestack]
+[1.monitoring.production.sharestack]
+[1.logs.production.sharestack]
+
+
+[webservers:children]
+1.web.production.sharestack
+
+[dbservers:children]
+1.db.production.sharestack
+
+[monitoring:children]
+1.monitoring.production.sharestack
+
+[logs:children]
+1.logs.production.sharestack

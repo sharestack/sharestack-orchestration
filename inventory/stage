@@ -1,0 +1,19 @@
+
+# The groups will be single, will work like an alias for referencing the right address
+[1.web.stage.sharestack]
+[1.db.stage.sharestack]
+[1.monitoring.stage.sharestack]
+[1.logs.stage.sharestack]
+
+
+[webservers:children]
+1.web.stage.sharestack
+
+[dbservers:children]
+1.db.stage.sharestack
+
+[monitoring:children]
+1.monitoring.stage.sharestack
+
+[logs:children]
+1.logs.stage.sharestack

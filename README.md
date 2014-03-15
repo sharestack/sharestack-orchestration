@@ -190,14 +190,30 @@ $ ansible webservers -i inventory --list-hosts
     web1.stage.sharestack.org
 ```
 
+Now production webservers. As we have only 2 we could do this with 2 patterns
+production and webserver, or, webserver and not stage
+
+```bash
+$ ansible *production*:\&webservers -i inventory --list-hosts 
+    web1.sharestack.org
+$ ansible \!*stage*:\&webservers -i inventory --list-hosts 
+    web1.sharestack.org
+```
+
+> Note: the scaping for characters like `&` and `!` because of bash
+
 As we see this is very flexible when targeting deployments, for example only
 deploy in stage.
 
-Of course this patterns are used the same way with the ansible-playbook command passing the flag `--limit`:
+Of course this patterns are used the same way in the playbooks (inside the yaml files)
+or with the ansible-playbook command passing the flag `--limit`:
 
 ```
 ansible-playbook ./deploy.yml  -i inventory --limit=*stage*
 ```
+
+Further reading: http://docs.ansible.com/intro_patterns.html
+
 
 Provision
 -------------

@@ -24,6 +24,181 @@ touch a web administration tool
 
 ---
 
+Before continoing, explanation of inventory
+-------------------------------------------
+
+We are using a mix of dynamc and static inventory. In ansible an inventory is the
+place where you put yout hosts (or targets) based on groups and groups of groups, etc
+
+So I could set a host file like this:
+
+```yaml
+[atlanta]
+host1
+host2
+
+[raleigh]
+host2
+host3
+
+[southeast:children]
+atlanta
+raleigh
+
+[usa:children]
+southeast
+northeast
+southwest
+northwest
+```
+
+This is very flexible becuase we could target one server, one group, a group of...
+
+On the other side with services like AWS, Digital ocean, Linode... this servers
+are dynamically created, destroyed, moved... and then there are not in the same 
+place, so we need something that will populate this host files.
+
+So we have to use also dynamic invetory, this works running an script (depends on the service)
+that gathers data of your server account and then assigns data so ansible could use it
+
+wrapping up, we will put the host names (as if there where groups) assigned in the creation of our instances
+ in the static inventory for example:
+
+```yaml
+# The groups will be single, will work like an alias for referencing the right address
+[1.web.production.sharestack]
+[2.web.production.sharestack]
+[1.db.production.sharestack]
+[2.db.production.sharestack]
+[1.lb.production.sharestack]
+[1.monitoring.production.sharestack]
+[1.logs.production.sharestack]
+[1.searchers.production.sharestack]
+
+# The groups
+
+[webservers:children]
+1.web.production.sharestack
+2.web.production.sharestack
+
+[dbservers:children]
+1.db.production.sharestack
+
+[lbservers:children]
+1.lb.production.sharestack
+
+[cacheservers:children]
+1.cache.production.sharestack
+
+[monitoring:children]
+1.monitoring.production.sharestack
+
+[logs:children]
+1.logs.production.sharestack
+
+[searchservers:children]
+1.searchers.production.sharestack
+
+# Alias to call easily the environment
+[production:children]
+*.production.*
+
+```
+
+So afterwards, when we call ansible we will call with the digital ocean
+inventory script along with the host file, this means that in the playbooks as
+we refer to the hosts exclusively ansible will know where are this servers.
+
+
+> Use `--list-hosts` before doing anything!
+
+An example of host patterns
+
+Imagine that we have a directory named `inventory` where our host files are
+(yes we can have more than one and combine then when calling)
+
+like this:
+
+```
+./inventory
+├── production
+└── stage
+```
+
+File `inventory/production`
+
+```
+[1.web.production.sharestack]
+web1.sharestack.org
+[1.db.production.sharestack]
+db1.sharestack.org
+
+[webservers:children]
+1.web.production.sharestack
+
+[dbservers:children]
+1.web.production.sharestack
+```
+
+File `inventory/stage`
+
+```
+[1.web.stage.sharestack]
+web1.stage.sharestack.org
+[1.db.stage.sharestack]
+db1.stage.sharestack.org
+
+[webservers:children]
+1.web.stage.sharestack
+
+[dbservers:children]
+1.web.stage.sharestack
+```
+
+Lets check our patterns, our first one is calling all with the pattern `all` or `*`
+
+```bash
+$ ansible all -i inventory --list-hosts 
+    web1.stage.sharestack.org
+    db1.sharestack.org
+    web1.sharestack.org
+    db1.stage.sharestack.org
+```
+
+now the targe are only the production servers
+
+
+```bash
+$ ansible *production* -i inventory --list-hosts 
+    db1.sharestack.org
+    web1.sharestack.org
+```
+
+Now the staging ones
+
+```bash
+$ ansible *stage* -i inventory --list-hosts 
+    web1.stage.sharestack.org
+    db1.stage.sharestack.org
+```
+
+Now the web servers only
+
+```bash
+$ ansible webservers -i inventory --list-hosts 
+    web1.sharestack.org
+    web1.stage.sharestack.org
+```
+
+As we see this is very flexible when targeting deployments, for example only
+deploy in stage.
+
+Of course this patterns are used the same way with the ansible-playbook command passing the flag `--limit`:
+
+```
+ansible-playbook ./deploy.yml  -i inventory --limit=*stage*
+```
+
 Provision
 -------------
 

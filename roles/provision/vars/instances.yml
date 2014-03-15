@@ -71,7 +71,8 @@
 # describe the instances to create:
 
 instances:
-  - name: development.test.1
+  # Web server for production one
+  - name: 1.web.production.sharestack
     image: 1505447
     size: 66
     region: 5

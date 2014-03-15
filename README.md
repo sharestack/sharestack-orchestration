@@ -59,7 +59,8 @@ are dynamically created, destroyed, moved... and then there are not in the same
 place, so we need something that will populate this host files.
 
 So we have to use also dynamic invetory, this works running an script (depends on the service)
-that gathers data of your server account and then assigns data so ansible could use it
+that gathers data of your server account and then assigns data so ansible could use it, this script
+is developed by ansible and we have to put in the directory where the hosts are (in our case: `inventory`)
 
 wrapping up, we will put the host names (as if there where groups) assigned in the creation of our instances
  in the static inventory for example:
@@ -209,7 +210,16 @@ Of course this patterns are used the same way in the playbooks (inside the yaml 
 or with the ansible-playbook command passing the flag `--limit`:
 
 ```
-ansible-playbook ./deploy.yml  -i inventory --limit=*stage*
+$ ansible-playbook ./deploy.yml  -i inventory/  --list-hosts --limit=*production*
+
+playbook: ./deploy.yml
+
+  play #1 (all): host count=4
+    178.223.181.38
+    178.223.181.129
+    85.85.22.45
+    178.221.177.110
+
 ```
 
 Further reading: http://docs.ansible.com/intro_patterns.html

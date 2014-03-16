@@ -6,6 +6,14 @@
 [1.logs.stage.sharestack]
 
 
+# group for convenience for deployments
+[stage:children]
+1.web.stage.sharestack
+1.db.stage.sharestack
+1.monitoring.stage.sharestack
+1.logs.stage.sharestack
+
+# Logical grouping
 [webservers:children]
 1.web.stage.sharestack
 

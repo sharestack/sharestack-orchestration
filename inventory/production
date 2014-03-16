@@ -6,6 +6,15 @@
 [1.logs.production.sharestack]
 
 
+# group for convenience for deployments
+[production:children]
+1.web.production.sharestack
+1.db.production.sharestack
+1.monitoring.production.sharestack
+1.logs.production.sharestack
+
+
+# Logical grouping
 [webservers:children]
 1.web.production.sharestack
 

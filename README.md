@@ -13,7 +13,7 @@ Description
 -----------
 
 This big ansible playbook orchestrates all the infrastructure of sharestack,
-from monitoring, logs to the sharestack application itself.
+from monitoring, logs... to the sharestack application itself.
 
 Actually is designed for 2 aims:
 
@@ -24,11 +24,11 @@ touch a web administration tool
 
 ---
 
-Before continoing, explanation of inventory
+Before continuing, explanation of inventory
 -------------------------------------------
 
-We are using a mix of dynamc and static inventory. In ansible an inventory is the
-place where you put yout hosts (or targets) based on groups and groups of groups, etc
+We are using a mix of dynamic and static inventory. In ansible an inventory is the
+place where you put your hosts (or targets) based on groups and groups of groups
 
 So I could set a host file like this:
 
@@ -52,15 +52,15 @@ southwest
 northwest
 ```
 
-This is very flexible becuase we could target one server, one group, a group of...
+This is very flexible becuase we could target one server, one group, a group of groups...
 
 On the other side with services like AWS, Digital ocean, Linode... this servers
-are dynamically created, destroyed, moved... and then there are not in the same 
-place, so we need something that will populate this host files.
+are dynamically created, destroyed, moved... and this changes their address eventually,
+so we need something that will populate this host files with this dynamic adresses.
 
 So we have to use also dynamic invetory, this works running an script (depends on the service)
 that gathers data of your server account and then assigns data so ansible could use it, this script
-is developed by ansible and we have to put in the directory where the hosts are (in our case: `inventory`)
+is developed by ansible ([check the list](https://github.com/ansible/ansible/tree/devel/plugins/inventory)) and we have to put in the directory where the hosts are (in our case: `inventory`)
 
 wrapping up, we will put the host names (as if there where groups) assigned in the creation of our instances
  in the static inventory for example:
@@ -99,19 +99,15 @@ wrapping up, we will put the host names (as if there where groups) assigned in t
 
 [searchservers:children]
 1.searchers.production.sharestack
-
-# Alias to call easily the environment
-[production:children]
-*.production.*
-
 ```
 
-So afterwards, when we call ansible we will call with the digital ocean
-inventory script along with the host file, this means that in the playbooks as
-we refer to the hosts exclusively ansible will know where are this servers.
+Afterwards, when we call ansible we will call with the digital ocean
+inventory script along with the host file (this is done automatically by ansible), 
+this means that in the playbooks as we refer to the hosts exclusively ansible
+will know where are this servers.
 
 
-> Use `--list-hosts` before doing anything!
+> Use `--list-hosts` before doing anything and check that are the correct hosts!
 
 An example of host patterns
 
@@ -166,7 +162,7 @@ $ ansible all -i inventory --list-hosts
     db1.stage.sharestack.org
 ```
 
-now the targe are only the production servers
+Now the targe are only the production servers
 
 
 ```bash
@@ -228,7 +224,7 @@ Further reading: http://docs.ansible.com/intro_patterns.html
 Provision
 -------------
 
-The first step is to provision our infrastrcuture, because we don't have machines
+The first step is to provision our infrastructure, because we don't have machines
 to install the stuff! 
 This step will be executed **locally** because we don't have target hosts, only 
 Digital ocean service API. Lets setup stuff first.
@@ -327,7 +323,7 @@ If you want to execute both of them you can use
 ansible-playbook ./provision.yml  -i 'localhost,'  --connection=local
 ```
 
-or with virtualenv:
+Or with virtualenv:
 
 ```
 ansible-playbook ./provision.yml  -i 'localhost,'  --connection=local --extra-vars "ansible_python_interpreter=~/.virtualenvs/ansible/bin/python"

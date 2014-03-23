@@ -3,4 +3,4 @@
 # This file will be only a centralized point to execute all, refer to each
 # included file for more detail
 
-- include: provision.yml
+- include: creation.yml

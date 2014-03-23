@@ -5,11 +5,11 @@
   gather_facts: False
 
   vars_files:
-    - roles/provision/vars/sshkeys.yml
-    - roles/provision/vars/instances.yml
+    - roles/creation/vars/sshkeys.yml
+    - roles/creation/vars/instances.yml
 
   roles:
-    - provision
+    - creation
   tags:
-    - provision
+    - creation
     - setup

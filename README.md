@@ -337,6 +337,32 @@ ansible-playbook ./creation.yml  -i 'localhost,'  --connection=local --extra-var
 Provision
 ---------
 
+The provision block will install all the neccessary things so the deployments 
+will go perfectly
+
+###Common
+
+This role will create deployments group and user, and install all the common
+things like python and git. This will be applied in all the machines
+
+We only have to configure some variables:
+
+```
+sharestack_working_group: "sharestack"
+sharestack_working_user: "sharestack"
+sharestack_working_user_auth_ssh_keys: 
+  - "~/.ssh/id_rsa_sharestack.pub"
+```
+
+This varialbes will set up our working user, group and the ssh keys that will
+be allowed to log in with that user account
+
+To execute, for example for our local test environment (vagrant in this case)
+
+```
+ansible-playbook ./provision.yml  -i inventory/   --limit=local --tags="common"
+```
+
 Deployment
 ----------
 

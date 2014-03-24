@@ -1,0 +1,10 @@
+---
+
+- name: Install common dependencies
+  hosts: all
+  sudo: true
+  roles:
+    - common
+  tags:
+    - pre
+    - common

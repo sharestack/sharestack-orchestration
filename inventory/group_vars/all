@@ -1,0 +1,6 @@
+
+# This will be the user that will deploy, run...
+sharestack_working_group: "sharestack"
+sharestack_working_user: "sharestack"
+sharestack_working_user_auth_ssh_keys: 
+  - "~/.ssh/id_rsa_sharestack.pub"

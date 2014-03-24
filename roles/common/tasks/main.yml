@@ -1,0 +1,44 @@
+---
+
+- name: Create working group
+  group: name={{ sharestack_working_group }} state=present
+
+- name: Create working user
+  user: >
+    name={{ sharestack_working_user }}
+    state=present
+    group={{ sharestack_working_group }}
+    groups="sudo,admin"
+
+- name: Add ssh authorized ssh keys for working user
+  authorized_key: >
+    user={{ sharestack_working_user }}
+    key="{{ lookup('file', item) }}"
+  with_items: sharestack_working_user_auth_ssh_keys
+
+- name: Install python
+  apt: >
+    pkg=python
+    state=present
+    update_cache=yes
+  tags:
+    - python
+    - install
+
+- name: Install python headers
+  apt: >
+    pkg=python-dev
+    state=present
+    update_cache=yes
+  tags:
+    - python
+    - install
+
+- name: Install git
+  apt: >
+    pkg=git
+    state=present
+    update_cache=yes
+  tags:
+    - git
+    - install

@@ -1,6 +1,7 @@
 ---
 
-- hosts: 127.0.0.1 # this hasn't got a target host
+- name: Create ssh and cloud instances
+  hosts: 127.0.0.1 # this hasn't got a target host
   connection: local
   gather_facts: False
 

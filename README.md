@@ -360,7 +360,7 @@ be allowed to log in with that user account
 To execute, for example for our local test environment (vagrant in this case)
 
 ```
-ansible-playbook ./provision.yml  -i inventory/   --limit=local --tags="common"
+ansible-playbook ./provision.yml -i inventory/ --limit=local --tags="common"
 ```
 
 Deployment

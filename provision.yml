@@ -8,3 +8,10 @@
   tags:
     - pre
     - common
+
+- name: Install virtualenv
+  hosts: webservers
+  roles:
+    - virtualenv
+  tags:
+    - virtualenv

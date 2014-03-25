@@ -1,0 +1,9 @@
+---
+
+
+virtualenv_version: 1.11.4
+virtualenv_user: "{{ sharestack_working_user }}"
+virtualenv_prefix: /home/{{ virtualenv_user }}/.virtualenvs
+virtualenvs_to_create:
+  - api
+  - core

@@ -1,0 +1,5 @@
+---
+
+virtualenv_version: 1.11.4
+virtualenv_user: "{{ remote_user }}"
+virtualenv_prefix: /home/{{ remote_user }}/.virtualenvs

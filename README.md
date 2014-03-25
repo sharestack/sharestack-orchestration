@@ -345,7 +345,7 @@ will go perfectly
 This role will create deployments group and user, and install all the common
 things like python and git. This will be applied in all the machines
 
-We only have to configure some variables:
+We only have to configure some variables for example in (`inventory/group_vars/all`):
 
 ```
 sharestack_working_group: "sharestack"
@@ -361,6 +361,27 @@ To execute, for example for our local test environment (vagrant in this case)
 
 ```
 ansible-playbook ./provision.yml -i inventory/ --limit=local --tags="common"
+```
+
+###Virtualenv
+
+This role will install virtualenv and create the desired virtualenvs.
+
+First you need to set up some variables (`roles/virtualenv/vars/main.yml`):
+
+```
+virtualenv_version: 1.11.4
+virtualenv_user: "{{ sharestack_working_user }}"
+virtualenv_prefix: /home/{{ virtualenv_user }}/.virtualenvs
+virtualenvs_to_create:
+  - api
+  - core
+```
+
+After that you can execute with:
+
+```
+ansible-playbook ./provision.yml -i inventory/ --limit=local --tags="virtualenv"
 ```
 
 Deployment

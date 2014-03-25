@@ -34,6 +34,16 @@
     - python
     - install
 
+- name: Install python pip
+  apt: >
+    pkg=python-pip
+    state=present
+    update_cache=yes
+  tags:
+    - python
+    - pip
+    - install
+
 - name: Install git
   apt: >
     pkg=git

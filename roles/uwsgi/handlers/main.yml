@@ -1,0 +1,5 @@
+---
+
+
+- name: Stop uwsgi daemon
+  service: name=uwsgi state=stopped enabled=no

@@ -384,6 +384,15 @@ After that you can execute with:
 ansible-playbook ./provision.yml -i inventory/ --limit=local --tags="virtualenv"
 ```
 
+###uwsgi
+
+We don't have to setup nothing, execute with:
+
+ansible-playbook ./provision.yml -i inventory/ --limit=local --tags="uwsgi"
+
+
+
+
 Deployment
 ----------
 

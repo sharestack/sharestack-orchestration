@@ -1,0 +1,30 @@
+---
+
+- name: Install uwsgi
+  apt: >
+    pkg=uwsgi
+    state=present
+    update_cache=yes
+  notify: Stop uwsgi daemon
+  tags:
+    - uwsgi
+    - install
+
+- name: Install uwsgi python plugin
+  apt: >
+    pkg=uwsgi-plugin-python
+    state=present
+    update_cache=yes
+  tags:
+    - uwsgi
+    - install
+
+- name: Install uwsgi python3 plugin
+  apt: >
+    pkg=uwsgi-plugin-python3
+    state=present
+    update_cache=yes
+  tags:
+    - uwsgi
+    - install
+

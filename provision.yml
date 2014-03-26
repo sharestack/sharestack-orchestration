@@ -15,3 +15,11 @@
     - virtualenv
   tags:
     - virtualenv
+
+- name: Install uwsgi
+  hosts: webservers
+  sudo: true
+  roles:
+    - uwsgi
+  tags:
+    - uwsgi

@@ -390,7 +390,9 @@ We don't have to setup nothing, execute with:
 
 ansible-playbook ./provision.yml -i inventory/ --limit=local --tags="uwsgi"
 
+###Nginx
 
+###Postgres
 
 
 Deployment

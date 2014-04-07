@@ -16,6 +16,16 @@
     key="{{ lookup('file', item) }}"
   with_items: sharestack_working_user_auth_ssh_keys
 
+- name: create directories
+  file: >
+    path=/var/run/sharestack
+    owner={{ sharestack_working_user }}
+    group={{ sharestack_working_group }}
+    state=directory
+  tags:
+    - paths
+    - create
+
 - name: Install python
   apt: >
     pkg=python

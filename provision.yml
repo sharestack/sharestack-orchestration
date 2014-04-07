@@ -23,3 +23,11 @@
     - uwsgi
   tags:
     - uwsgi
+
+- name: Install nginx
+  hosts: webservers
+  sudo: true
+  roles:
+    - nginx
+  tags:
+    - nginx

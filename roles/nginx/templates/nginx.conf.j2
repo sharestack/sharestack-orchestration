@@ -1,0 +1,37 @@
+daemon off; # Needed for supervisord
+user www-data;
+worker_processes 1;
+pid /var/run/nginx.pid;
+
+events {
+    worker_connections 1024;
+}
+
+http{
+    upstream sharestack-api {
+        server unix:/var/run/sharestack/api.socket;
+    }
+
+    server {
+        listen      80;
+        server_name api.sharestack.org;
+        charset     utf-8;
+
+        access_log /var/log/nginx/sharestack_api_access.log;
+        error_log /var/log/nginx/sharestack_api_error.log;
+
+
+        location /static/ {
+            alias /home/vagrant/.virtualenvs/rest/lib/python2.7/site-packages/django/contrib/admin/static/;
+        }
+
+        #location /content/ {
+        #    alias /opt/graphite/webapp/content/;
+        #}
+
+        location / {
+            uwsgi_pass  sharestack-api;
+            include     /etc/nginx/uwsgi_params;
+        }
+    }
+}

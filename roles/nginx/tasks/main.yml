@@ -1,0 +1,21 @@
+---
+
+
+- name: Install nginx
+  apt: >
+    pkg=nginx
+    state=present
+    update_cache=yes
+  tags:
+    - nginx
+    - install
+
+- name: Install nginx
+  apt: >
+    pkg=uwsgi-extra
+    state=present
+    update_cache=yes
+  tags:
+    - nginx
+    - install
+    - uwsgi

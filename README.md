@@ -391,10 +391,14 @@ We don't have to setup nothing, execute with:
 ansible-playbook ./provision.yml -i inventory/ --limit=local --tags="uwsgi"
 
 ###Nginx
+<<<<<<< HEAD
 
 ansible-playbook ./provision.yml -i inventory/ --limit=local --tags="nginx"
 
+=======
+>>>>>>> d65f0411f5923f823afaedc78f1cbb00381e0300
 
+###Postgres
 
 
 Deployment
